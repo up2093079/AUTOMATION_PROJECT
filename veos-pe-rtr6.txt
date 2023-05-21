@@ -1,0 +1,18 @@
+vrf instance NEW_L3VPN
+!
+ip routing vrf NEW_L3VPN
+!
+int Ethernet4
+no switchport
+vrf NEW_L3VPN
+ip address 10.1.1.5 255.255.255.252
+no shutdown
+!
+router bgp 65000
+!
+vrf NEW_L3VPN
+ rd 65000:3
+ route-target import vpn-ipv4 65000:3
+ route-target export vpn-ipv4 65000:3
+ redistribute connected
+ redistribute static
